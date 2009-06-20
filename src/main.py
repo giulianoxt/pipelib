@@ -8,12 +8,14 @@ if __name__ == '__main__':
     
     f = TuboSequencial(
                        
-           TuboSequencial(
+           JoinDecorator(
+                         
+                TuboParalelo(
         
-                ConstantFiltro(["abc", "def", "fgh"]),
+                   ConstantFiltro(["abc", "def", "fgh"]),
                 
-                JoinDecorator(
-                    ReplaceFiltro({"abc":"123", "def":"456", "fgh":"789"})
+                   ReplaceFiltro({"abc":"123", "def":"456", "fgh":"789"})
+                 
                 )
                 
            ),
