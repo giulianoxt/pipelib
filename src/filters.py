@@ -61,4 +61,14 @@ class InputFiltro(Filtro):
 class OutputFiltro(Filtro):
     def process(self, input):
         print input
-        return None
+        return input
+    
+
+class ConstantFiltro(Filtro):
+    def __init__(self, val):
+        self.val = val
+    
+    def process(self, input):
+        return self.val
+
+
