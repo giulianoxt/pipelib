@@ -27,14 +27,16 @@ class TuboParalelo(Tubo):
             queue.put(None)
         
         def procConsumidor(filtroB, in_queue, out_queue):
-            input = in_queue.get()
-            
-            while input is not None:
-                result = filtroB.process(input)
-                out_queue.put(result)
-                
+            def inputGenerator():
                 input = in_queue.get()
                 
+                while input is not None:
+                    yield input
+                    input = in_queue.get()
+            
+            for result in filtroB.process(inputGenerator()):
+                out_queue.put(result)
+            
             out_queue.put(None)
         
         AtoB_queue = Queue()
