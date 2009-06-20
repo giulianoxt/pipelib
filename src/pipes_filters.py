@@ -28,4 +28,5 @@ class Decorator(Filtro):
         self.filtro = filtro
     
     def process(self, input):
-        self.filtro.process(input)
+        output = self.filtro.process(input)
+        return output
