@@ -17,7 +17,7 @@ class JoinDecorator(Decorator):
 class SplitDecorator(Decorator):
     """
         Transforma um filtro que gera
-        uma lista, e transforma em um filtro
+        uma lista, em um filtro
         que retorna um generator.
         
         Assim, o filtro resultante poderá ser
