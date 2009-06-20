@@ -1,7 +1,11 @@
+
 class Filtro(object):
+    """
+        Filtro identidade
+    """
+    
     def process(self, input):
-        # Implementar nas classes base
-        raise NotImplementedError
+        return input
 
 
 class Tubo(Filtro):
@@ -10,7 +14,7 @@ class Tubo(Filtro):
         self.filtroB = filtroB
 
     def process(self, input):
-        # Implementar nas classes base
+        """ Implementar nas classes base """
         raise NotImplementedError
 
 
@@ -25,4 +29,13 @@ class Decorator(Filtro):
     
     def process(self, input):
         self.filtro.process(input)
+
+
+class TuboSequencial(Tubo):
+    def process(self, input):
+        outA = self.filtroA.process(input)
+        outB = self.filtroB.process(outA)
+        
+        return outB
+
 
