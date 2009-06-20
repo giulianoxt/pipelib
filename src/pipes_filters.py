@@ -30,3 +30,7 @@ class Decorator(Filtro):
     def process(self, input):
         output = self.filtro.process(input)
         return output
+
+
+def run_filtro(filtro, first_input = None):
+    return filtro.process(first_input)

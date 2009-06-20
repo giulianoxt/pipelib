@@ -49,3 +49,4 @@ class OutputFiltro(Filtro):
     def process(self, input):
         print input
         return None
+
