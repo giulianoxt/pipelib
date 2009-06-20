@@ -13,11 +13,12 @@ if __name__ == '__main__':
               ReplaceFiltro({"abc":"123", "def":"456", "fgh":"789"})
            ),
            
-           Base64EncodeFiltro(),
-           
-           JoinDecorator(
+           TuboParalelo(
+              Base64EncodeFiltro(),
               Base64DecodeFiltro()
            ),
+           
+           JoinDecorator(Filtro()),
            
            OutputFiltro()
            
