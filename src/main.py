@@ -5,6 +5,15 @@ from pipes_filters import *
 
 
 if __name__ == '__main__':
-    f = TuboSequencial(InputFiltro(), OutputFiltro())
+    
+    f = TuboSequencial(
+                       
+            TuboSequencial(
+                InputFiltro(),
+                Base64EncodeFiltro()
+            ),
+            
+            OutputFiltro()
+    )
 
     go(f)
