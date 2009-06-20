@@ -4,11 +4,16 @@ from processing import Process, Queue
 
 
 class TuboSequencial(Tubo):
+    def __init__(self, *filters):
+        self.filters = filters
+    
     def process(self, input):
-        outA = self.filtroA.process(input)
-        outB = self.filtroB.process(outA)
+        output = input
         
-        return outB
+        for filter in self.filters:
+            output = filter.process(output)
+        
+        return output
 
 
 class TuboParalelo(Tubo):
