@@ -29,13 +29,3 @@ class Decorator(Filtro):
     
     def process(self, input):
         self.filtro.process(input)
-
-
-class TuboSequencial(Tubo):
-    def process(self, input):
-        outA = self.filtroA.process(input)
-        outB = self.filtroB.process(outA)
-        
-        return outB
-
-
