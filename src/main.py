@@ -1,8 +1,10 @@
 from pipes import *
 from filters import *
 from decorators import *
-from pipe_filters import *
+from pipes_filters import *
 
 
 if __name__ == '__main__':
-    pass
+    f = TuboSequencial(InputFiltro(), OutputFiltro())
+
+    go(f)

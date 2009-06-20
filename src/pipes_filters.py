@@ -32,5 +32,5 @@ class Decorator(Filtro):
         return output
 
 
-def run_filtro(filtro, first_input = None):
-    return filtro.process(first_input)
+def go(filtro, first_input = None):
+    filtro.process(first_input)

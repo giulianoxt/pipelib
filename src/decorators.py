@@ -3,10 +3,10 @@ from pipes_filters import Decorator
 class JoinDecorator(Decorator):
     """
         Transforma um filtro que gera
-        um resultado em pedaços (generator)
-        em um filtro que gera um resultado único.
+        um resultado em pedacos (generator)
+        em um filtro que gera um resultado unico.
         
-        O resultado único vai ser uma lista
+        O resultado unico vai ser uma lista
     """
     def process(self, input):
         generator = super(self).process(input)
@@ -21,7 +21,7 @@ class SplitDecorator(Decorator):
         uma lista, em um filtro
         que retorna um generator.
         
-        Assim, o filtro resultante poderá ser
+        Assim, o filtro resultante podera ser
         utilizado no TuboParalelo
     """
     
