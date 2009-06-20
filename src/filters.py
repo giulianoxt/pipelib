@@ -7,22 +7,30 @@ from string import *
 
 class Base64EncodeFiltro(Filtro):
     def process(self, input):
-        return b64encode(input)
+        for x in input:
+            yield b64encode(x)
 
         
 class Base64DecodeFiltro(Filtro):
     def process(self, input):
-        return b64decode(input)
+        for x in input:
+            yield b64decode(x)
 
     
 class CompressFiltro(Filtro):
     def process(self, input):
-        return compress(input)
+        objcomp = compressobj()
+        for word in input:
+            yield objcomp.compress(word)
+        yield objcomp.flush(Z_FINISH)
 
     
-class DescompressFiltro(Filtro):
+class DecompressFiltro(Filtro):
     def process(self, input):
-        return decompress(input)
+        objdecomp = decompressobj()
+        for word in input:
+            yield objdecomp.decompress(word)
+        yield objdecomp.flush()
 
     
 class ReplaceFiltro(Filtro):
@@ -49,13 +57,4 @@ class InputFiltro(Filtro):
 class OutputFiltro(Filtro):
     def process(self, input):
         print input
-        return input
-    
-
-class ConstantFiltro(Filtro):
-    def __init__(self, val):
-        self.val = val
-        
-    def process(self, input):
-        return self.val
-
+        return None
