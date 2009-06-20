@@ -35,13 +35,13 @@ class TuboParalelo(Tubo):
         BtoC_queue = Queue()
         
         procA = Process(
-                 target = procProdutor,
-                 args = (self.filtroA, input, AtoB_queue)
+            target = procProdutor,
+            args = (self.filtroA, input, AtoB_queue)
         )
         
         procB = Process(
-                 target = procConsumidor,
-                 args = (self.filtroB, AtoB_queue, BtoC_queue)
+            target = procConsumidor,
+            args = (self.filtroB, AtoB_queue, BtoC_queue)
         )
         
         procA.start()
