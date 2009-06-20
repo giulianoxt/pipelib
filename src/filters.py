@@ -6,18 +6,21 @@ from string import *
 
 
 class Base64EncodeFiltro(Filtro):
+    #@param input: Lista de palavras
     def process(self, input):
         for x in input:
             yield b64encode(x)
 
         
 class Base64DecodeFiltro(Filtro):
+    #@param input: Lista de palavras
     def process(self, input):
         for x in input:
             yield b64decode(x)
 
     
 class CompressFiltro(Filtro):
+    #@param input: Lista de palavras 
     def process(self, input):
         objcomp = compressobj()
         for word in input:
@@ -26,6 +29,7 @@ class CompressFiltro(Filtro):
 
     
 class DecompressFiltro(Filtro):
+    #@param input: Lista de palavras
     def process(self, input):
         objdecomp = decompressobj()
         for word in input:
