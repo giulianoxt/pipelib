@@ -26,15 +26,16 @@ class DescompressFiltro(Filtro):
 
     
 class ReplaceFiltro(Filtro):
+    #@param words: Mapeamento de palavras 
     def __init__(self, words):
         self.words = words
-        
+    #@param input: Lista de palavras    
     def process(self, input):
-        res = input
-        for key in iter(self.words):
-            res = replace(key, self.words[key], res)
-        return res
-
+        for old_word in input:
+            if old_word in self.words:
+                yield self.words[old_word]
+            else:
+                yield old_word
 
 class InputFiltro(Filtro):
     def __init__(self, msg = ''):
