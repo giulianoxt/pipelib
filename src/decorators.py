@@ -9,7 +9,7 @@ class JoinDecorator(Decorator):
         O resultado unico vai ser uma lista
     """
     def process(self, input):
-        generator = super(self).process(input)
+        generator = Decorator.process(self, input)
         
         result = list(generator)
         return result
@@ -26,7 +26,7 @@ class SplitDecorator(Decorator):
     """
     
     def process(self, input):
-        result_list = super(self).process(input)
+        result_list = Decorator.process(self, input)
         
         for result in result_list:
             yield result
