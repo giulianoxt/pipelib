@@ -34,8 +34,7 @@ class SplitDecorator(Decorator):
 
 class SplitStringDecorator(Decorator):
     
-    #@param input: String
     def process(self, input):
-        res = string.split(input, " ")
+        res = string.split(Decorator.process(self, input), " ")
         for x in res:
             yield x
