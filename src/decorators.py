@@ -1,4 +1,5 @@
 from pipes_filters import Decorator
+import string
 
 class JoinDecorator(Decorator):
     """
@@ -30,3 +31,11 @@ class SplitDecorator(Decorator):
         
         for result in result_list:
             yield result
+
+class SplitStringDecorator(Decorator):
+    
+    #@param input: String
+    def process(self, input):
+        res = string.split(input, " ")
+        for x in res:
+            yield x
