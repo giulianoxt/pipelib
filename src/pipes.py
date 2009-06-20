@@ -1,6 +1,7 @@
 from pipes_filters import Tubo
 
-from processing import Process, Queue
+from Queue import Queue
+from threading import Thread
 
 
 class TuboSequencial(Tubo):
@@ -39,12 +40,12 @@ class TuboParalelo(Tubo):
         AtoB_queue = Queue()
         BtoC_queue = Queue()
         
-        procA = Process(
+        procA = Thread(
             target = procProdutor,
             args = (self.filtroA, input, AtoB_queue)
         )
         
-        procB = Process(
+        procB = Thread(
             target = procConsumidor,
             args = (self.filtroB, AtoB_queue, BtoC_queue)
         )
