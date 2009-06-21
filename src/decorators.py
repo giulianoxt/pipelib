@@ -39,3 +39,11 @@ class SplitStringDecorator(Decorator):
         for x in res:
             yield x
 
+
+class LoopDecorator(Decorator):
+    def process(self, input):
+        while True:
+            input = Decorator.process(self, input)
+            
+            if input is None:
+                break

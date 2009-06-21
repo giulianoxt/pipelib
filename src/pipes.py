@@ -5,22 +5,16 @@ from threading import Thread
 
 
 class TuboSequencial(Tubo):
-    def __init__(self, *filters):
-        self.filters = filters
-    
     def process(self, input):
         output = input
         
-        for filter in self.filters:
+        for filter in self.filtros:
             output = filter.process(output)
         
         return output
 
 
 class TuboParalelo(Tubo):
-    def __init__(self, *filtros):
-        self.filtros = filtros
-    
     def process(self, input):
         
         def queueToGenerator(queue):

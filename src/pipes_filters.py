@@ -9,9 +9,8 @@ class Filtro(object):
 
 
 class Tubo(Filtro):
-    def __init__(self, filtroA, filtroB):
-        self.filtroA = filtroA
-        self.filtroB = filtroB
+    def __init__(self, *filtros):
+        self.filtros = filtros
 
     def process(self, input):
         """ Implementar nas classes base """
@@ -32,5 +31,5 @@ class Decorator(Filtro):
         return output
 
 
-def go(filtro, first_input = None):
+def run(filtro, first_input = None):
     filtro.process(first_input)
