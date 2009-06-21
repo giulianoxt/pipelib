@@ -18,47 +18,51 @@ class TuboSequencial(Tubo):
 
 
 class TuboParalelo(Tubo):
+    def __init__(self, *filtros):
+        self.filtros = filtros
+    
     def process(self, input):
         
-        def procProdutor(filtroA, inputA, queue):
-            for result in filtroA.process(inputA):
-                queue.put(result)
-                
-            queue.put(None)
-        
-        def procConsumidor(filtroB, in_queue, out_queue):
-            def inputGenerator():
-                input = in_queue.get()
-                
-                while input is not None:
-                    yield input
-                    input = in_queue.get()
+        def queueToGenerator(queue):
+            obj = queue.get() if queue else None
             
-            for result in filtroB.process(inputGenerator()):
-                out_queue.put(result)
-            
-            out_queue.put(None)
-        
-        AtoB_queue = Queue()
-        BtoC_queue = Queue()
-        
-        procA = Thread(
-            target = procProdutor,
-            args = (self.filtroA, input, AtoB_queue)
-        )
-        
-        procB = Thread(
-            target = procConsumidor,
-            args = (self.filtroB, AtoB_queue, BtoC_queue)
-        )
-        
-        procA.start()
-        procB.start()
-        
-        res = BtoC_queue.get()
-        while res is not None:
-            yield res
-            res = BtoC_queue.get()
+            while obj is not None:
+                yield obj
+                obj = queue.get()
 
-        procA.join()
-        procB.join()
+        def generatorToQueue(gen, queue):
+            for obj in gen:
+                queue.put(obj)
+            
+            queue.put(None)
+
+        def threadFiltro(filtro, in_queue, out_queue):
+            if in_queue is None:
+                outputGen = filtro.process(input)
+            else:
+                inputGen  = queueToGenerator(in_queue) 
+                outputGen = filtro.process(inputGen)
+            
+            generatorToQueue(outputGen, out_queue)
+        
+        
+        threads, queue = [], None
+        
+        for filtro in self.filtros:
+            new_queue = Queue()
+     
+            t = Thread(
+                target = threadFiltro
+              , args   = (filtro, queue, new_queue)
+            )
+            
+            queue = new_queue
+            t.start()
+            threads.append(t)
+            
+        for result in queueToGenerator(queue):
+            yield result
+        
+        for t in threads:
+            t.join()
+

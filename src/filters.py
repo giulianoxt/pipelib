@@ -1,37 +1,38 @@
 
-from pipes_filters import *
-from base64 import *
-from zlib import *
-from string import *
+from pipes_filters import Filtro
+
+import time
+import zlib
+import base64
 
 
 class Base64EncodeFiltro(Filtro):
     #@param input: Lista de palavras
     def process(self, input):
         for x in input:
-            yield b64encode(x)
+            yield base64.b64encode(x)
 
         
 class Base64DecodeFiltro(Filtro):
     #@param input: Lista de palavras
     def process(self, input):
         for x in input:
-            yield b64decode(x)
+            yield base64.b64decode(x)
 
     
 class CompressFiltro(Filtro):
     #@param input: Lista de palavras 
     def process(self, input):
-        objcomp = compressobj()
+        objcomp = zlib.compressobj()
         for word in input:
             yield objcomp.compress(word)
-        yield objcomp.flush(Z_FINISH)
+        yield objcomp.flush(zlib.Z_FINISH)
 
     
 class DecompressFiltro(Filtro):
     #@param input: Lista de palavras
     def process(self, input):
-        objdecomp = decompressobj()
+        objdecomp = zlib.decompressobj()
         for word in input:
             yield objdecomp.decompress(word)
         yield objdecomp.flush()
@@ -41,6 +42,7 @@ class ReplaceFiltro(Filtro):
     #@param words: Mapeamento de palavras 
     def __init__(self, words):
         self.words = words
+        
     #@param input: Lista de palavras    
     def process(self, input):
         for old_word in input:
@@ -71,4 +73,22 @@ class ConstantFiltro(Filtro):
     
     def process(self, input):
         return self.val
+
+
+class MapFiltro(Filtro):
+    def __init__(self, func):
+        self.func = func
+    
+    def process(self, input):
+        output = self.func(input)
+        return output
+
+
+class WaitFiltro(Filtro):
+    def __init__(self, seconds):
+        self.seconds = seconds
+    
+    def process(self, input):
+        time.sleep(self.seconds)
+        return input
 

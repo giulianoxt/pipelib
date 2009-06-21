@@ -9,16 +9,18 @@ if __name__ == '__main__':
     f = TuboSequencial(
                                              
            TuboParalelo(
-              ConstantFiltro(["abc", "def", "fgh"]),
-              ReplaceFiltro({"abc":"123", "def":"456", "fgh":"789"})
-           ),
-           
-           TuboParalelo(
+              ConstantFiltro(["abc", "def", "ghi"]),
+              
+              ReplaceFiltro({"abc":"123", "def":"456", "ghi":"789"}),
+              
               Base64EncodeFiltro(),
-              Base64DecodeFiltro()
+              
+              Base64DecodeFiltro(),
+              
+              ReplaceFiltro({"123":"abc", "456":"def", "789":"ghi"})
            ),
-           
-           JoinDecorator(Filtro()),
+
+           MapFiltro(lambda l : ''.join(l)),
            
            OutputFiltro()
            
