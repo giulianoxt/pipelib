@@ -49,6 +49,7 @@ class ReplaceFiltro(Filtro):
             else:
                 yield old_word
 
+
 class InputFiltro(Filtro):
     def __init__(self, msg = ''):
         self.msg = msg
@@ -70,5 +71,4 @@ class ConstantFiltro(Filtro):
     
     def process(self, input):
         return self.val
-
 

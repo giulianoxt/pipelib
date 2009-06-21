@@ -32,9 +32,10 @@ class SplitDecorator(Decorator):
         for result in result_list:
             yield result
 
-class SplitStringDecorator(Decorator):
-    
+
+class SplitStringDecorator(Decorator):    
     def process(self, input):
         res = string.split(Decorator.process(self, input), " ")
         for x in res:
             yield x
+
